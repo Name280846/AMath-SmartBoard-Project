@@ -32,7 +32,7 @@ class _ScanPageState extends State<ScanPage> {
     _checkPermissionsAndStartScan();
   }
 
-  // 3. เพิ่มฟังก์ชันขอสิทธิ์ตรงนี้
+  // 3. เพิ่มฟังก์ชันขอสิทธิ์
   Future<void> _checkPermissionsAndStartScan() async {
     // ขอสิทธิ์ Location และ Bluetooth พร้อมกัน
     Map<Permission, PermissionStatus> statuses = await [
@@ -63,7 +63,7 @@ class _ScanPageState extends State<ScanPage> {
   }
 
   void _connect(BluetoothDevice device) async {
-    // ... (ส่วนโค้ด _connect ของคุณคงเดิม ไม่ต้องแก้ครับ)
+    // ... (ส่วนโค้ด _connect เดิม)
     await FlutterBluePlus.stopScan();
     try {
       await device.connect();
@@ -97,7 +97,6 @@ class _ScanPageState extends State<ScanPage> {
 
   @override
   Widget build(BuildContext context) {
-    // ... (ส่วนโค้ด build ของคุณคงเดิม ไม่ต้องแก้ครับ)
     return Scaffold(
       appBar: AppBar(
         title: const Text("เชื่อมต่อกระดาน A-Math"),
@@ -133,7 +132,7 @@ class _ScanPageState extends State<ScanPage> {
 }
 
 // ==========================================
-// 2. หน้า LOBBY (เพิ่มการเลือก Player 1 / 2)
+// 2. หน้า LOBBY (เลือกบทบาท)
 // ==========================================
 class LobbyPage extends StatefulWidget {
   final BluetoothCharacteristic? characteristic;
@@ -248,7 +247,7 @@ class _LobbyPageState extends State<LobbyPage> {
 }
 
 // ==========================================
-// 3. หน้าเล่นเกม (GamePage) - UI ใหม่ (Dark Slate + LED Style) แนวนอน + ระบบจบเกม
+// 3. หน้าเล่นเกม (GamePage ของผู้เล่น)
 // ==========================================
 
 class GamePage extends StatefulWidget {
@@ -394,14 +393,14 @@ class _GamePageState extends State<GamePage> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
-          // 🌟 ลดพื้นที่ว่างด้านบนและล่างของเนื้อหาใน Dialog เพื่อให้พอดีจอแนวนอน
+          // ปรับลดพื้นที่จอด้านขบด้านล่างให้พอดีจอแนวนอน
           contentPadding: const EdgeInsets.fromLTRB(24, 10, 24, 10),
           title: const Center(
             child: Text(
               "GAME OVER",
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 20, // 🌟 ลดจาก 24 เหลือ 20
+                fontSize: 20,
                 fontWeight: FontWeight.bold,
                 letterSpacing: 2,
               ),
@@ -414,13 +413,13 @@ class _GamePageState extends State<GamePage> {
                 resultText,
                 style: TextStyle(
                   color: resultColor,
-                  fontSize: 22, // 🌟 ลดจาก 28 เหลือ 22
+                  fontSize: 22,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(height: 10), // 🌟 ลดช่องว่างจาก 20 เหลือ 10
+              const SizedBox(height: 10),
               Container(
-                padding: const EdgeInsets.all(10), // 🌟 ลดขอบในจาก 15 เหลือ 10
+                padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   color: Colors.black26,
                   borderRadius: BorderRadius.circular(10),
@@ -432,16 +431,13 @@ class _GamePageState extends State<GamePage> {
                       children: [
                         const Text(
                           "YOUR SCORE",
-                          style: TextStyle(
-                            color: Colors.white54,
-                            fontSize: 10,
-                          ), // 🌟 ลดจาก 12
+                          style: TextStyle(color: Colors.white54, fontSize: 10),
                         ),
                         Text(
                           "${widget.isPlayer1 ? p1Score : p2Score}",
                           style: const TextStyle(
                             color: Colors.white,
-                            fontSize: 20, // 🌟 ลดจาก 24 เหลือ 20
+                            fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -451,16 +447,13 @@ class _GamePageState extends State<GamePage> {
                       children: [
                         const Text(
                           "OPPONENT",
-                          style: TextStyle(
-                            color: Colors.white54,
-                            fontSize: 10,
-                          ), // 🌟 ลดจาก 12
+                          style: TextStyle(color: Colors.white54, fontSize: 10),
                         ),
                         Text(
                           "${widget.isPlayer1 ? p2Score : p1Score}",
                           style: const TextStyle(
                             color: Colors.white,
-                            fontSize: 20, // 🌟 ลดจาก 24 เหลือ 20
+                            fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -481,7 +474,7 @@ class _GamePageState extends State<GamePage> {
                   ),
                   padding: const EdgeInsets.symmetric(
                     horizontal: 30,
-                    vertical: 10, // 🌟 ลดจาก 12 เหลือ 10
+                    vertical: 10,
                   ),
                 ),
                 onPressed: () {
@@ -899,7 +892,7 @@ class _RefereeBoardPageState extends State<RefereeBoardPage> {
   // --- ตัวแปรสำหรับ Grid และ พิกัด ---
   Map<int, String> boardMemory = {};
   Map<int, String> confirmedBoard =
-      {}; // 🌟 [เพิ่มใหม่] ตัวแปร Backup เก็บสถานะกระดานที่ถูกต้องล่าสุด
+      {}; // 🌟 ตัวแปร Backup เก็บสถานะกระดานที่ถูกต้องล่าสุด
 
   int? startPoint; // จุดเริ่ม (S)
   int? endPoint; // จุดจบ (E)
@@ -918,7 +911,7 @@ class _RefereeBoardPageState extends State<RefereeBoardPage> {
     _gameTimer?.cancel();
     _gameTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (gameStarted && lightStatus != "YELLOW") {
-        // เวลาเดินเมื่อเกมเริ่ม และไม่ใช่ช่วงกรรมการตรวจ
+        // เวลาเดินเมื่อเกมเริ่ม และไม่นับช่วงกรรมการตรวจ
         setState(() {
           if (currentActiveTurn == 1) {
             if (p1Seconds > 0) p1Seconds--;
@@ -1091,8 +1084,7 @@ class _RefereeBoardPageState extends State<RefereeBoardPage> {
                   p1Seconds = 22 * 60;
                   p2Seconds = 22 * 60;
                   boardMemory.clear();
-                  confirmedBoard
-                      .clear(); // 🌟 [เพิ่มใหม่] ล้าง Backup กระดานด้วย
+                  confirmedBoard.clear(); // 🌟 ล้าง Backup กระดาน
                   gameHistory.clear();
                   startPoint = null;
                   endPoint = null;
@@ -1221,7 +1213,7 @@ class _RefereeBoardPageState extends State<RefereeBoardPage> {
         return;
       }
 
-      // 🌟 [เพิ่มใหม่] ตรวจจับสมการผิดพลาด เพื่อลบเบี้ยที่เพิ่งวางทิ้ง
+      // 🌟 ตรวจจับสมการผิดพลาด เพื่อลบเบี้ยที่เพิ่งวางทิ้ง
       if (msg == "MSG:WRONG_EQ") {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -1253,8 +1245,7 @@ class _RefereeBoardPageState extends State<RefereeBoardPage> {
           gameStarted = true;
           lastAction = "GAME ON!";
           boardMemory.clear();
-          confirmedBoard
-              .clear(); // 🌟 [เพิ่มใหม่] เริ่มเกมใหม่ต้องเคลียร์ Backup ด้วย
+          confirmedBoard.clear(); // 🌟 เริ่มเกมใหม่ต้องเคลียร์ Backup ด้วย
         }
 
         if (msg.startsWith("LIGHT:")) lightStatus = msg.substring(6);
@@ -1307,7 +1298,7 @@ class _RefereeBoardPageState extends State<RefereeBoardPage> {
               "totalScore": int.tryParse(parts[5]) ?? 0,
             });
 
-            // 🌟 [เพิ่มใหม่] ถ้าสมการถูกต้องและได้คะแนน ให้เซฟกระดานนี้เป็น Backup ล่าสุด
+            // 🌟 ถ้าสมการถูกต้องและได้คะแนน ให้เซฟกระดานนี้เป็น Backup ล่าสุด
             confirmedBoard = Map.from(boardMemory);
           }
         }
